@@ -43,6 +43,10 @@ module EvernoteOAuth
       consumer.get_request_token(options)
     end
 
+    def access_token
+      @access_token ||= OAuth::AccessToken.new(consumer, @token, @secret)
+    end
+
     private
     def consumer
       @consumer ||= OAuth::Consumer.new(
@@ -58,10 +62,6 @@ module EvernoteOAuth
       url = "https://#{@service_host}"
       url += "/#{path}" if path
       url
-    end
-
-    def access_token
-      @access_token ||= OAuth::AccessToken.new(consumer, @token, @secret)
     end
 
     def thrift_client(client_class, url)
